@@ -1,0 +1,16 @@
+<!doctype html><html><body style="margin:0;background:#f1ebde">
+<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { createElaraModel } from './createElaraModel.js';
+const W = 360, H = 1130;
+const r = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+r.setSize(W, H); r.setPixelRatio(1); r.outputColorSpace = THREE.SRGBColorSpace; document.body.appendChild(r.domElement);
+const scene = new THREE.Scene(); scene.background = new THREE.Color(0xf1ebde);
+scene.add(new THREE.HemisphereLight(0xffffff, 0xb0a890, 1.6));
+const d = new THREE.DirectionalLight(0xffffff, 1.6); d.position.set(1, 2, 3); scene.add(d);
+const model = createElaraModel(); scene.add(model);
+const cam = new THREE.OrthographicCamera(-0.263, 0.263, 0.826, -0.826, 0.1, 10);
+window.view = (deg) => { const a = deg * Math.PI / 180; cam.position.set(Math.sin(a) * 3, 0.796, Math.cos(a) * 3); cam.lookAt(0, 0.796, 0); r.render(scene, cam); };
+window.view(0); window.ready = true;
+</script></body></html>
